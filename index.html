@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Events!</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="jumbotron">
+            <h2>Press any key to begin. <span id="input"></span></h2>
+            <h2>Wins: <span id="wins"><strong> </strong></span></h2>
+            <h2>Current Word: <span id="word"><strong> </strong></span></h2>
+            <h2>Number of Guesses Remaining: <span id="remaining"><strong>13</strong></span></h2>
+            <h2>Letters Already Guessed: <span id="guesses"><strong> </strong></span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- We have to put this at the end of our document to ensure the user-text
+         span exists when we try to access it. -->
+    <script type="text/javascript">
+
+
+
+      var words = ["braves", "rangers", "astros", "dodgers", "yankees"];
+
+        var guesses = [];
+
+
+        // Let's start by grabbing a reference to the <span> below.
+        var input = document.getElementById("input");
+        var remaining = document.getElementById("remaining");
+        var word = document.getElementById("word");
+        var wins = document.getElementById("wins");
+        var guesses = document.getElementById("guesses");
+        var misses = 13;
+        var list = 0;
+        var team = "-";
+        
+
+       //  do {
+           
+
+            for (var i = 0; i < words[list].length - 1; i++) {
+                team = team + "-";
+            }
+            word.textContent = team;
+            
+
+           
+              
+            document.onkeyup = function (event) {
+              for (var i = 0; i < words[list].length; i++){
+              var letter = event.key;
+              console.log(i);
+              console.log(letter);
+
+                if(letter === words[list].charAt(i)){
+                 team = (team.slice(0,i) + letter + (team.slice(i+1)));
+                  word.textContent = team;
+              }
+            }
+          }
+
+  
+      
+    </script>
+  </body>
+</html>
