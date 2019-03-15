@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    
+
     <!-- We have to put this at the end of our document to ensure the user-text
          span exists when we try to access it. -->
     <script type="text/javascript">
@@ -43,6 +43,8 @@
         var misses = 13;
         var list = 0;
         var team = "-";
+        var wrong = "";
+        
         
 
        //  do {
@@ -59,14 +61,29 @@
             document.onkeyup = function (event) {
               for (var i = 0; i < words[list].length; i++){
               var letter = event.key;
-              console.log(i);
-              console.log(letter);
 
                 if(letter === words[list].charAt(i)){
                  team = (team.slice(0,i) + letter + (team.slice(i+1)));
                   word.textContent = team;
-              }
-            }
+                 }
+                }  
+                if(words[list].indexOf(letter) === -1){
+                    if (wrong.indexOf(letter) === -1){
+                        if(wrong === ""){
+                    wrong = letter;
+                    
+                     }else{
+                         wrong = (wrong + ", " + letter); 
+                     }
+                     misses = misses - 1;
+                     console.log(wrong);
+                     remaining.textContent = misses;
+                    }
+                     
+                     guesses.textContent = wrong;
+                     
+                 }
+            
           }
 
   
