@@ -18,6 +18,9 @@ h1 {
 #answer{
     height: 75px;
     background-color: beige;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Alfa Slab One', cursive;
 }
  
 .bats{
@@ -36,4 +39,9 @@ h1 {
     height: 450px;
     border-right: dotted black;
     border-top: dotted black;
+}
+
+#img{
+    height: 300px;
+    width: 300px;
 }

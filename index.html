@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Hangman</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Permanent+Marker" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="style.css" rel="stylesheet"/>
 
@@ -25,7 +25,9 @@
         </div>
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-4" id="left"></div>
+            <div class="col-md-4" id="left">
+                <span id="img"></span>
+            </div>
             <div class="col-md-4" id="right">
                 <!-- <div class="jumbotron"> -->
                     <h2>Press any lowercase letter to begin. <span id="input"></span></h2>
@@ -48,8 +50,19 @@
 
 
         var words = ["braves", "rangers", "astros", "dodgers", "yankees", "phillies", "angels", "mariners", "indians", "padres"];
+        var answers = ["The Atlanta Braves",
+                        "The Texas Ranges",
+                        "The Houston Astros",
+                        "The LA Dodgers",
+                        "The New York Yankees",
+                        "The Philadelphia Phillies",
+                        "The LA Angels",
+                        "The Seattle Mariners",
+                        "The Cleveland Indians",
+                        "The San Diego Padres"];
 
         var guesses = [];
+        var images = ["braves.png", "rangers.png", "rangers.png"];
 
 
         // Let's start by grabbing a reference to the <span> below.
@@ -59,6 +72,7 @@
         var wins = document.getElementById("wins");
         var loses = document.getElementById("loses");
         var guesses = document.getElementById("guesses");
+        var announce = document.getElementById("answer");
         var w = 0;
         var l = 0;
         var list = 0;
@@ -72,24 +86,25 @@
 
 
         function missed() {
+            announce.textContent = answers[list];
+            document.getElementById("img").src = images[list];
             list++;
             l++;
             loses.textContent = l;
             reset();
-            console.log("l " + list);
         }
 
         function correct() {
+            announce.textContent = answers[list];
+            document.getElementById("img").src = images[list];
             list++;
             w++;
             wins.textContent = w;
             reset();
-            console.log("w " + list);
         }
 
 
         function reset() {
-            console.log("dash");
 
             dashes = "-";
             misses = 13;
@@ -111,7 +126,6 @@
         // Take a letter input from the keyboard
         document.onkeyup = function (event) {
             var test = event.key;
-            console.log(test.charCodeAt(0));
             if(test.charCodeAt(0) > 96 && test.charCodeAt(0) < 123){
             
 
@@ -135,7 +149,6 @@
                         wrong = (wrong + ", " + letter);
                     }
                     misses--;
-                    console.log(wrong);
                     remaining.textContent = misses;
                 }
 
