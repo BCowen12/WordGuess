@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>Events!</title>
+    <title>Hangman</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="style.css" rel="stylesheet"/>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container">
-      <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-          <div class="jumbotron">
-            <h2>Press any key to begin. <span id="input"></span></h2>
-            <h2>Wins: <span id="wins"><strong> </strong></span></h2>
-            <h2>Current Word: <span id="word"><strong> </strong></span></h2>
-            <h2>Number of Guesses Remaining: <span id="remaining"><strong>13</strong></span></h2>
-            <h2>Letters Already Guessed: <span id="guesses"><strong> </strong></span></h2>
-          </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8" id="title">
+                <h1><img class="bats" src="images/bats.jpg" alt="bats">Baseball Hangman<img class="bats" src="images/bats.jpg" alt="bats"></h1>
+            </div>
         </div>
-      </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8" id="answer">
+                <h2 id="team"></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4" id="left"></div>
+            <div class="col-md-4" id="right">
+                <!-- <div class="jumbotron"> -->
+                    <h2>Press any lowercase letter to begin. <span id="input"></span></h2>
+                    <h2>Wins: <span id="wins"><strong>0</strong></span></h2>
+                    <h2>Loses: <span id="loses"><strong>0</strong></span></h2>
+                    <h2>Current Word: <span id="word"><strong> </strong></span></h2>
+                    <h2>Number of Guesses Remaining: <span id="remaining"><strong>13</strong></span></h2>
+                    <h2>Letters Already Guessed: <span id="guesses"><strong> </strong></span></h2>
+                <!-- </div> -->
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
 
 
@@ -29,7 +47,7 @@
 
 
 
-      var words = ["braves", "rangers", "astros", "dodgers", "yankees"];
+        var words = ["braves", "rangers", "astros", "dodgers", "yankees", "phillies", "angels", "mariners", "indians", "padres"];
 
         var guesses = [];
 
@@ -39,55 +57,104 @@
         var remaining = document.getElementById("remaining");
         var word = document.getElementById("word");
         var wins = document.getElementById("wins");
+        var loses = document.getElementById("loses");
         var guesses = document.getElementById("guesses");
-        var misses = 13;
+        var w = 0;
+        var l = 0;
         var list = 0;
-        var team = "-";
+        var misses = 13;
         var wrong = "";
-        
-        
+        var team = "";
+        var result = "";
+        var dashes = "-";
 
-       //  do {
-           
+        reset();
 
+
+        function missed() {
+            list++;
+            l++;
+            loses.textContent = l;
+            reset();
+            console.log("l " + list);
+        }
+
+        function correct() {
+            list++;
+            w++;
+            wins.textContent = w;
+            reset();
+            console.log("w " + list);
+        }
+
+
+        function reset() {
+            console.log("dash");
+
+            dashes = "-";
+            misses = 13;
+            wrong = "";
+            team = "";
+            result = "";
+
+            // set the name with dashes
             for (var i = 0; i < words[list].length - 1; i++) {
-                team = team + "-";
+                dashes = dashes + "-";
             }
+            team = dashes;
             word.textContent = team;
+            guesses.textContent = wrong;
+            remaining.textContent = misses;
+        }
+
+
+        // Take a letter input from the keyboard
+        document.onkeyup = function (event) {
+            var test = event.key;
+            console.log(test.charCodeAt(0));
+            if(test.charCodeAt(0) > 96 && test.charCodeAt(0) < 123){
             
 
-           
-              
-            document.onkeyup = function (event) {
-              for (var i = 0; i < words[list].length; i++){
-              var letter = event.key;
+            for (var i = 0; i < words[list].length; i++) {
+                var letter = event.key;
+                letter.toLowerCase();
 
-                if(letter === words[list].charAt(i)){
-                 team = (team.slice(0,i) + letter + (team.slice(i+1)));
-                  word.textContent = team;
-                 }
-                }  
-                if(words[list].indexOf(letter) === -1){
-                    if (wrong.indexOf(letter) === -1){
-                        if(wrong === ""){
-                    wrong = letter;
-                    
-                     }else{
-                         wrong = (wrong + ", " + letter); 
-                     }
-                     misses = misses - 1;
-                     console.log(wrong);
-                     remaining.textContent = misses;
+                // Replace the dash with the entered character
+                if (letter === words[list].charAt(i)) {
+                    team = (team.slice(0, i) + letter + (team.slice(i + 1)));
+                    word.textContent = team;
+                }
+            }
+
+            if (words[list].indexOf(letter) === -1) {
+                if (wrong.indexOf(letter) === -1) {
+                    if (wrong === "") {
+                        wrong = letter;
+
+                    } else {
+                        wrong = (wrong + ", " + letter);
                     }
-                     
-                     guesses.textContent = wrong;
-                     
-                 }
-            
-          }
+                    misses--;
+                    console.log(wrong);
+                    remaining.textContent = misses;
+                }
 
-  
-      
+                guesses.textContent = wrong;
+            }
+            if (misses === 0) {
+                missed();
+            }
+            if (team.indexOf("-") === -1) {
+                correct();
+            }
+        }else{
+            alert("That was not a lowercase letter!!! Pick better!");
+        }
+     }
+
+
+
     </script>
-  </body>
+</body>
+
 </html>

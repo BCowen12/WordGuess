@@ -1,0 +1,39 @@
+body{
+    background-image: url(images/grass.jpg);
+    background-size: 900px 300px;
+    background-repeat: round;
+}
+
+#title{
+    background-color: beige;
+}
+
+h1 {
+    margin: 0px auto;
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 50px;
+}
+
+#answer{
+    height: 75px;
+    background-color: beige;
+}
+ 
+.bats{
+    width: 118px;
+    height: 150px;
+}
+
+#right{
+    background-color: beige;
+    height: 450px;
+    border-top: dotted black;
+}
+
+#left{
+    background-color: beige;
+    height: 450px;
+    border-right: dotted black;
+    border-top: dotted black;
+}
