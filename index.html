@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8" id="title">
-                <h1><img class="bats" src="images/bats.jpg" alt="bats">Baseball Hangman<img class="bats" src="images/bats.jpg" alt="bats"></h1>
+                <h1><img class="bats" src="images/bats.png" alt="bats">Baseball Hangman<img class="bats" src="images/bats.png" alt="bats"></h1>
             </div>
         </div>
         <div class="row">
@@ -47,8 +47,7 @@
          span exists when we try to access it. -->
     <script type="text/javascript">
 
-
-
+        
         var words = ["braves", "rangers", "astros", "dodgers", "yankees", "phillies", "angels", "mariners", "indians", "padres"];
         var answers = ["The Atlanta Braves",
                         "The Texas Ranges",
@@ -62,8 +61,8 @@
                         "The San Diego Padres"];
 
         var guesses = [];
-        var images = ["braves.png", "rangers.png", "rangers.png"];
-
+        var images = ["braves.jpg", "rangers.jpg", "astros.jpg","dodgers.jpeg", "yankees.jpg", "phillies.png", "angels.jpg", "mariners.png", "indians.jpg", "padres.svg"];
+        
 
         // Let's start by grabbing a reference to the <span> below.
         var input = document.getElementById("input");
@@ -73,6 +72,7 @@
         var loses = document.getElementById("loses");
         var guesses = document.getElementById("guesses");
         var announce = document.getElementById("answer");
+        var picture = document.getElementById("img");
         var w = 0;
         var l = 0;
         var list = 0;
@@ -86,25 +86,25 @@
 
 
         function missed() {
-            announce.textContent = answers[list];
-            document.getElementById("img").src = images[list];
-            list++;
             l++;
-            loses.textContent = l;
+            announce.textContent = answers[list];
+            picture.innerHTML = `<img src=${images[list]}>`;
+            list++;
             reset();
         }
 
         function correct() {
-            announce.textContent = answers[list];
-            document.getElementById("img").src = images[list];
-            list++;
             w++;
-            wins.textContent = w;
+            picture.innerHTML = `<img src=${images[list]}>`;
+            announce.textContent = answers[list];
+            list++;
             reset();
         }
 
 
         function reset() {
+            loses.textContent = l;
+            wins.textContent = w;
 
             dashes = "-";
             misses = 13;
